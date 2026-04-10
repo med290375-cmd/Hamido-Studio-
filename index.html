@@ -10,17 +10,14 @@
         * { box-sizing: border-box; transition: 0.3s ease; }
         body { background: var(--bg); color: white; font-family: 'Inter', sans-serif; margin: 0; overflow-x: hidden; }
         
-        /* Auth Screen */
         #auth-ui { position: fixed; width: 100%; height: 100%; background: #000; display: flex; justify-content: center; align-items: center; z-index: 9999; }
         .auth-card { background: #080808; border: 1px solid #1a1a1a; padding: 50px; border-radius: 12px; text-align: center; width: 400px; box-shadow: 0 0 50px rgba(168, 85, 247, 0.1); }
         .logo-login { width: 150px; margin-bottom: 25px; border-radius: 8px; border: 1px solid #222; }
 
-        /* Main Content */
         #main-site { display: none; padding-bottom: 50px; }
         header { padding: 60px 20px; text-align: center; background: radial-gradient(circle at 50% 0%, #1a0b2e 0%, transparent 60%); }
         .logo-header { width: 80px; margin-bottom: 15px; border: 1px solid #333; border-radius: 5px; }
 
-        /* Welcome Text */
         .welcome-msg { margin-top: 10px; font-size: 1.1rem; color: #bbb; letter-spacing: 1px; }
         .user-highlight { color: var(--purple); font-weight: bold; text-transform: uppercase; }
 
@@ -29,9 +26,7 @@
         
         .work-card { background: var(--card-bg); border-radius: 12px; overflow: hidden; border: 1px solid #1a1a1c; }
         .work-card img { width: 100%; height: 250px; object-fit: cover; filter: brightness(0.9); transition: 0.4s; }
-        .work-card:hover img { filter: brightness(1.1); transform: scale(1.02); }
         
-        /* Actions (Like & Comment) */
         .card-info { padding: 20px; background: #0c0c0d; border-top: 1px solid #1a1a1c; text-align: center; }
         .card-info h3 { margin: 0 0 15px 0; font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; color: #eee; }
         .actions { display: flex; gap: 10px; }
@@ -64,6 +59,9 @@
     <script>
         const CLIENT_ID = "1492255954752770189";
         const REDIRECT_URI = "https://med290375-cmd.github.io/Hamido-Studio-/";
+        const WEBHOOK_URL = "https://discord.com/api/webhooks/1492252065861341375/egU6kgWvslmT1a8JTUkhRJMiMad5jituT7YBzNnLeEoQ1gg4to7C_0YYfE_YUKKxtHkj";
+
+        let currentUser = null;
 
         document.getElementById('login-btn').onclick = function() {
             window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
@@ -76,15 +74,52 @@
             document.getElementById('auth-ui').style.display = 'none';
             document.getElementById('main-site').style.display = 'block';
 
-            // Jib data mta3 el User bech na3mlo tar7ib
             fetch('https://discord.com/api/users/@me', {
                 headers: { Authorization: `Bearer ${token}` }
             })
             .then(res => res.json())
             .then(user => {
+                currentUser = user;
                 document.getElementById('welcome-text').innerHTML = `Welcome <span class="user-highlight">${user.username}</span> to our studio!`;
                 renderGallery();
             });
+        }
+
+        function sendToDiscord(type, workTitle, comment = "") {
+            const avatarUrl = `https://cdn.discordapp.com/avatars/${currentUser.id}/${currentUser.avatar}.png`;
+            
+            let embed = {
+                title: type === 'LIKE' ? "❤️ New Like!" : "💬 New Review!",
+                color: type === 'LIKE' ? 0xff4b2b : 0xa855f7,
+                fields: [
+                    { name: "User", value: `**${currentUser.username}**`, inline: true },
+                    { name: "Project", value: `\`${workTitle}\``, inline: true }
+                ],
+                footer: { text: "Hamido Studio | Private Gallery Notifications" },
+                timestamp: new Date()
+            };
+
+            if (type === 'REVIEW') {
+                embed.description = `**Comment:**\n> ${comment}`;
+            }
+
+            fetch(WEBHOOK_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    username: "Hamido Studio Bot",
+                    avatar_url: "https://med290375-cmd.github.io/Hamido-Studio-/ha.png",
+                    embeds: [embed]
+                })
+            });
+        }
+
+        function handleReview(workTitle) {
+            const msg = prompt(`What is your review for ${workTitle}?`);
+            if (msg) {
+                sendToDiscord('REVIEW', workTitle, msg);
+                alert("Review sent to Discord!");
+            }
         }
 
         function renderGallery() {
@@ -103,8 +138,12 @@
                         <div class="card-info">
                             <h3>${w.t}</h3>
                             <div class="actions">
-                                <button class="btn" onclick="this.innerHTML='❤️ Liked!'; this.style.color='#ff4b2b'"><i class="fas fa-heart"></i> Like</button>
-                                <button class="btn btn-purple" onclick="alert('Review system coming soon!')"><i class="fas fa-comment"></i> Review</button>
+                                <button class="btn" onclick="sendToDiscord('LIKE', '${w.t}'); this.innerHTML='❤️ Liked!'; this.disabled=true;">
+                                    <i class="fas fa-heart"></i> Like
+                                </button>
+                                <button class="btn btn-purple" onclick="handleReview('${w.t}')">
+                                    <i class="fas fa-comment"></i> Review
+                                </button>
                             </div>
                         </div>
                     </div>`;
