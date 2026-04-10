@@ -3,24 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hamido Studio | Portfolio</title>
+    <title>Hamido Studio | Premium Gallery</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root { --purple: #a855f7; --bg: #050505; --card-bg: #111; }
         * { box-sizing: border-box; transition: 0.3s ease; }
         body { background: var(--bg); color: white; font-family: 'Inter', sans-serif; margin: 0; overflow-x: hidden; }
         
+        /* Auth Screen */
         #auth-ui { position: fixed; width: 100%; height: 100%; background: #000; display: flex; justify-content: center; align-items: center; z-index: 9999; }
         .auth-card { background: #080808; border: 1px solid #1a1a1a; padding: 50px; border-radius: 12px; text-align: center; width: 400px; box-shadow: 0 0 50px rgba(168, 85, 247, 0.1); }
-        
+        .logo-login { width: 180px; margin-bottom: 25px; border-radius: 8px; border: 1px solid #222; }
+
+        /* Main Content */
         #main-site { display: none; padding-bottom: 50px; }
         header { padding: 80px 20px; text-align: center; background: radial-gradient(circle at 50% 0%, #1a0b2e 0%, transparent 60%); }
-        
+        .logo-header { width: 100px; margin-bottom: 20px; border: 1px solid #333; border-radius: 5px; }
+
         .container { max-width: 1400px; margin: auto; padding: 0 40px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 30px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 30px; }
         
         .work-card { background: var(--card-bg); border-radius: 12px; overflow: hidden; border: 1px solid #1a1a1c; }
-        .work-card img { width: 100%; height: 260px; object-fit: cover; filter: brightness(0.9); }
+        .work-card img { width: 100%; height: 250px; object-fit: cover; filter: brightness(0.9); }
         .card-info { padding: 20px; background: #0c0c0d; border-top: 1px solid #1a1a1c; text-align: center; }
         .card-info h3 { margin: 0; font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; color: #eee; }
     </style>
@@ -29,7 +33,7 @@
 
     <div id="auth-ui">
         <div class="auth-card">
-            <img src="HA-STUDIO-2.png" width="150" style="margin-bottom: 20px;">
+            <img src="Hamido Studio (1).png" class="logo-login">
             <h2 style="letter-spacing: 5px; margin: 0;">HAMIDO STUDIO</h2>
             <button id="login-btn" style="background: #5865F2; color: white; padding: 15px; width: 100%; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 25px;">
                 <i class="fab fa-discord"></i> ENTER GALLERY
@@ -39,7 +43,7 @@
 
     <div id="main-site">
         <header>
-            <img src="HA-STUDIO-2.png" width="100" style="margin-bottom: 20px;">
+            <img src="Hamido Studio (1).png" class="logo-header">
             <h1 style="letter-spacing: 15px; font-weight: 300; margin: 0;">PRIVATE ASSETS</h1>
         </header>
         <div class="container"><div class="grid" id="portfolio-grid"></div></div>
@@ -53,7 +57,6 @@
             window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
         };
 
-        // Thabet ken fema token fil URL
         if (window.location.hash.includes('access_token')) {
             document.getElementById('auth-ui').style.display = 'none';
             document.getElementById('main-site').style.display = 'block';
@@ -61,19 +64,19 @@
         }
 
         function renderGallery() {
-            // Asémi el tsawer bedabt kima fil GitHub mte3ek
+            // Hne salla7tlek asémi el tsawer bedabt kima m7outin 3al GitHub mte3ek
             const works = [
                 { t: "HL-RP OFFICIAL V1", i: "HL-RP-PIC-5.png" },
                 { t: "BLACK CITY BRAND", i: "HL-RP-PIC-4.png" },
-                { t: "HL-RP-PIC-3", i: "HL-RP-PIC-3.png" },
                 { t: "DIABLOS RED", i: "diablos-1.png" },
-                { t: "TRAPSTAR RP", i: "by-hamido.png" }
+                { t: "TRAPSTAR ROLEPLAY", i: "by-hamido.png" },
+                { t: "WORK ASSETS", i: "HA-STUDIO-2.png" }
             ];
             const grid = document.getElementById('portfolio-grid');
             works.forEach(w => {
                 grid.innerHTML += `
                     <div class="work-card">
-                        <img src="${w.i}" onerror="this.src='https://via.placeholder.com/400x250?text=Image+Not+Found'">
+                        <img src="${w.i}" onerror="this.src='https://via.placeholder.com/400x250?text=Check+File+Name'">
                         <div class="card-info"><h3>${w.t}</h3></div>
                     </div>`;
             });
