@@ -20,27 +20,31 @@
         header { padding: 60px 20px; text-align: center; background: radial-gradient(circle at 50% 0%, #1a0b2e 0%, transparent 60%); }
         .logo-header { width: 80px; margin-bottom: 15px; border: 1px solid #333; border-radius: 5px; }
 
+        /* Welcome Text */
+        .welcome-msg { margin-top: 10px; font-size: 1.1rem; color: #bbb; letter-spacing: 1px; }
+        .user-highlight { color: var(--purple); font-weight: bold; text-transform: uppercase; }
+
         .container { max-width: 1400px; margin: auto; padding: 0 40px; }
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 30px; }
         
         .work-card { background: var(--card-bg); border-radius: 12px; overflow: hidden; border: 1px solid #1a1a1c; }
-        .work-card img { width: 100%; height: 250px; object-fit: cover; filter: brightness(0.9); }
+        .work-card img { width: 100%; height: 250px; object-fit: cover; filter: brightness(0.9); transition: 0.4s; }
+        .work-card:hover img { filter: brightness(1.1); transform: scale(1.02); }
         
         /* Actions (Like & Comment) */
         .card-info { padding: 20px; background: #0c0c0d; border-top: 1px solid #1a1a1c; text-align: center; }
         .card-info h3 { margin: 0 0 15px 0; font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; color: #eee; }
         .actions { display: flex; gap: 10px; }
-        .btn { flex: 1; padding: 10px; border: 1px solid #222; border-radius: 6px; background: #16161a; color: white; cursor: pointer; font-weight: bold; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn { flex: 1; padding: 12px; border: 1px solid #222; border-radius: 6px; background: #16161a; color: white; cursor: pointer; font-weight: bold; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 8px; }
         .btn:hover { background: #222; border-color: var(--purple); }
         .btn-purple { background: var(--purple); border-color: var(--purple); }
-        .btn-purple:hover { opacity: 0.8; }
     </style>
 </head>
 <body>
 
     <div id="auth-ui">
         <div class="auth-card">
-            <img src="ha.png" class="logo-login">
+            <img src="ha.png" class="logo-login" onerror="this.src='https://via.placeholder.com/150?text=Logo+Not+Found'">
             <h2 style="letter-spacing: 5px; margin: 0;">HAMIDO STUDIO</h2>
             <button id="login-btn" style="background: #5865F2; color: white; padding: 15px; width: 100%; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 25px;">
                 <i class="fab fa-discord"></i> ENTER GALLERY
@@ -52,6 +56,7 @@
         <header>
             <img src="ha.png" class="logo-header">
             <h1 style="letter-spacing: 15px; font-weight: 300; margin: 0;">PRIVATE ASSETS</h1>
+            <div id="welcome-text" class="welcome-msg"></div>
         </header>
         <div class="container"><div class="grid" id="portfolio-grid"></div></div>
     </div>
@@ -64,14 +69,25 @@
             window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
         };
 
-        if (window.location.hash.includes('access_token')) {
+        const fragment = new URLSearchParams(window.location.hash.slice(1));
+        const token = fragment.get('access_token');
+
+        if (token) {
             document.getElementById('auth-ui').style.display = 'none';
             document.getElementById('main-site').style.display = 'block';
-            renderGallery();
+
+            // Jib data mta3 el User bech na3mlo tar7ib
+            fetch('https://discord.com/api/users/@me', {
+                headers: { Authorization: `Bearer ${token}` }
+            })
+            .then(res => res.json())
+            .then(user => {
+                document.getElementById('welcome-text').innerHTML = `Welcome <span class="user-highlight">${user.username}</span> to our studio!`;
+                renderGallery();
+            });
         }
 
         function renderGallery() {
-            // Asémi el tsawer salla7thomlek bedabt kima fil GitHub
             const works = [
                 { t: "HL-RP OFFICIAL V1", i: "HL-RP-PIC-5.png" },
                 { t: "BLACK CITY BRAND", i: "HL-RP-PIC-4.png" },
@@ -83,12 +99,12 @@
             works.forEach(w => {
                 grid.innerHTML += `
                     <div class="work-card">
-                        <img src="${w.i}" onerror="this.src='https://via.placeholder.com/400x250?text=Check+Naming'">
+                        <img src="${w.i}" onerror="this.src='https://via.placeholder.com/400x250?text=Image+Not+Found'">
                         <div class="card-info">
                             <h3>${w.t}</h3>
                             <div class="actions">
-                                <button class="btn" onclick="alert('❤️ Liked!')"><i class="fas fa-heart"></i> Like</button>
-                                <button class="btn btn-purple" onclick="alert('💬 Review sent!')"><i class="fas fa-comment"></i> Review</button>
+                                <button class="btn" onclick="this.innerHTML='❤️ Liked!'; this.style.color='#ff4b2b'"><i class="fas fa-heart"></i> Like</button>
+                                <button class="btn btn-purple" onclick="alert('Review system coming soon!')"><i class="fas fa-comment"></i> Review</button>
                             </div>
                         </div>
                     </div>`;
