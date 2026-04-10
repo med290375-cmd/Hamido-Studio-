@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hamido Studio | Premium Gallery</title>
+    <title>Hamido Studio | Premium Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root { --purple: #a855f7; --bg: #050505; --card-bg: #111; }
@@ -33,7 +33,7 @@
 
     <div id="auth-ui">
         <div class="auth-card">
-            <img src="Hamido Studio (1).png" class="logo-login">
+            <img src="ha.png" class="logo-login">
             <h2 style="letter-spacing: 5px; margin: 0;">HAMIDO STUDIO</h2>
             <button id="login-btn" style="background: #5865F2; color: white; padding: 15px; width: 100%; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 25px;">
                 <i class="fab fa-discord"></i> ENTER GALLERY
@@ -43,7 +43,7 @@
 
     <div id="main-site">
         <header>
-            <img src="Hamido Studio (1).png" class="logo-header">
+            <img src="ha.png" class="logo-header">
             <h1 style="letter-spacing: 15px; font-weight: 300; margin: 0;">PRIVATE ASSETS</h1>
         </header>
         <div class="container"><div class="grid" id="portfolio-grid"></div></div>
@@ -64,13 +64,14 @@
         }
 
         function renderGallery() {
-            // Hne salla7tlek asémi el tsawer bedabt kima m7outin 3al GitHub mte3ek
+            // Asémi el-files bedabt kima m7outin 3al GitHub mte3ek
             const works = [
                 { t: "HL-RP OFFICIAL V1", i: "HL-RP-PIC-5.png" },
                 { t: "BLACK CITY BRAND", i: "HL-RP-PIC-4.png" },
+                { t: "HL-RP-PIC-3", i: "HL-RP-PIC-3.png" },
                 { t: "DIABLOS RED", i: "diablos-1.png" },
                 { t: "TRAPSTAR ROLEPLAY", i: "by-hamido.png" },
-                { t: "WORK ASSETS", i: "HA-STUDIO-2.png" }
+                { t: "STUDIO ASSETS", i: "HA-STUDIO-2.png" }
             ];
             const grid = document.getElementById('portfolio-grid');
             works.forEach(w => {
