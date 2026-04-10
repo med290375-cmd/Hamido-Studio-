@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hamido Studio | Premium Portfolio</title>
+    <title>Hamido Studio | Premium Gallery</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root { --purple: #a855f7; --bg: #050505; --card-bg: #111; }
@@ -24,7 +24,7 @@
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 30px; }
         
         .work-card { background: var(--card-bg); border-radius: 12px; overflow: hidden; border: 1px solid #1a1a1c; }
-        .work-card img { width: 100%; height: 250px; object-fit: cover; filter: brightness(0.9); }
+        .work-card img { width: 100%; height: 260px; object-fit: cover; filter: brightness(0.9); }
         .card-info { padding: 20px; background: #0c0c0d; border-top: 1px solid #1a1a1c; text-align: center; }
         .card-info h3 { margin: 0; font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; color: #eee; }
     </style>
@@ -64,20 +64,20 @@
         }
 
         function renderGallery() {
-            // Asémi el-files bedabt kima m7outin 3al GitHub mte3ek
+            // Salla7tlek asémi el tsawer bedabt kima fil GitHub mte3ek tawa
             const works = [
                 { t: "HL-RP OFFICIAL V1", i: "HL-RP-PIC-5.png" },
-                { t: "BLACK CITY BRAND", i: "HL-RP-PIC-4.png" },
-                { t: "HL-RP-PIC-3", i: "HL-RP-PIC-3.png" },
-                { t: "DIABLOS RED", i: "diablos-1.png" },
+                { t: "HL-RP OFFICIAL V2", i: "HL-RP-PIC-4.png" },
+                { t: "HL-RP OFFICIAL V3", i: "HL-RP-PIC-3.png" },
+                { t: "DIABLOS RED DESIGN", i: "diablos-1.png" },
                 { t: "TRAPSTAR ROLEPLAY", i: "by-hamido.png" },
-                { t: "STUDIO ASSETS", i: "HA-STUDIO-2.png" }
+                { t: "STUDIO WORK", i: "HA-STUDIO-2.png" }
             ];
             const grid = document.getElementById('portfolio-grid');
             works.forEach(w => {
                 grid.innerHTML += `
                     <div class="work-card">
-                        <img src="${w.i}" onerror="this.src='https://via.placeholder.com/400x250?text=Check+File+Name'">
+                        <img src="${w.i}" onerror="this.src='https://via.placeholder.com/400x250?text=Check+Naming'">
                         <div class="card-info"><h3>${w.t}</h3></div>
                     </div>`;
             });
