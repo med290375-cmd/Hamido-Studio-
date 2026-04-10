@@ -3,141 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hamido Studio | Private Portfolio</title>
+    <title>Hamido Studio | Premium Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --purple: #a855f7; --bg: #050505; --card-bg: #111; --text: #eee; --neon: 0 0 15px rgba(168, 85, 247, 0.2); }
-        * { box-sizing: border-box; transition: 0.3s ease; cursor: crosshair; outline: none; }
+        :root { --purple: #a855f7; --bg: #050505; --card-bg: #111; }
+        * { box-sizing: border-box; transition: 0.3s ease; cursor: crosshair; }
+        body { background: var(--bg); color: white; font-family: 'Inter', sans-serif; margin: 0; overflow-x: hidden; }
         
-        body { 
-            background: var(--bg); color: white; 
-            font-family: 'Inter', sans-serif; 
-            margin: 0; overflow-x: hidden;
-        }
-
-        /* --- 1. LOGIN SCREEN --- */
-        #auth-ui {
-            position: fixed; width: 100%; height: 100%; background: #000;
-            display: flex; justify-content: center; align-items: center; z-index: 9999;
-        }
-        .auth-card {
-            background: #080808; border: 1px solid #1a1a1a; padding: 50px;
-            border-radius: 12px; text-align: center; width: 400px;
-            box-shadow: 0 0 50px rgba(168, 85, 247, 0.05);
-        }
+        #auth-ui { position: fixed; width: 100%; height: 100%; background: #000; display: flex; justify-content: center; align-items: center; z-index: 9999; }
+        .auth-card { background: #080808; border: 1px solid #1a1a1a; padding: 50px; border-radius: 12px; text-align: center; width: 400px; box-shadow: 0 0 50px rgba(168, 85, 247, 0.1); }
         .logo-original { width: 180px; margin-bottom: 30px; border: 1px solid #333; }
-        .btn-discord {
-            background: #5865F2; color: white; text-decoration: none; padding: 15px;
-            border-radius: 6px; font-weight: bold; display: flex; align-items: center;
-            gap: 12px; justify-content: center; margin-top: 25px; text-transform: uppercase;
-        }
-        .btn-discord:hover { background: #4752c4; transform: scale(1.05); box-shadow: 0 0 20px rgba(88, 101, 242, 0.3); }
+        .btn-discord { background: #5865F2; color: white; text-decoration: none; padding: 15px; border-radius: 6px; font-weight: bold; display: flex; align-items: center; gap: 12px; justify-content: center; margin-top: 25px; text-transform: uppercase; border: none; width: 100%; }
+        .btn-discord:hover { background: #4752c4; transform: scale(1.05); }
 
-        /* --- 2. MAIN CONTENT --- */
         #main-site { display: none; padding-bottom: 50px; }
-        
-        header {
-            padding: 100px 20px; text-align: center;
-            background: radial-gradient(circle at 50% 0%, #1a0b2e 0%, transparent 60%);
-        }
-
-        .user-tag {
-            position: fixed; top: 20px; right: 20px; background: rgba(0,0,0,0.8);
-            padding: 10px 20px; border-radius: 50px; border: 1px solid var(--purple);
-            display: flex; align-items: center; gap: 10px; z-index: 100;
-            box-shadow: var(--neon);
-        }
+        header { padding: 100px 20px; text-align: center; background: radial-gradient(circle at 50% 0%, #1a0b2e 0%, transparent 60%); }
+        .user-tag { position: fixed; top: 20px; right: 20px; background: rgba(0,0,0,0.8); padding: 10px 20px; border-radius: 50px; border: 1px solid var(--purple); display: flex; align-items: center; gap: 10px; z-index: 100; }
         .user-tag img { width: 35px; height: 35px; border-radius: 50%; border: 1px solid var(--purple); }
-
         .container { max-width: 1400px; margin: auto; padding: 0 40px; }
-        
-        /* Premium Gallery Grid */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-            gap: 30px;
-        }
-
-        .work-card {
-            background: var(--card-bg); border-radius: 12px; overflow: hidden;
-            border: 1px solid #1a1a1c; position: relative;
-        }
-
-        .work-card:hover {
-            border-color: var(--purple);
-            transform: translateY(-8px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.8), 0 0 20px rgba(168, 85, 247, 0.1);
-        }
-
-        /* HD Rendering CSS Tricks */
-        .work-card img {
-            width: 100%; height: 260px; object-fit: cover;
-            filter: brightness(0.9) contrast(1.1);
-            image-rendering: -webkit-optimize-contrast; /* Sharp Images on Chrome */
-            image-rendering: crisp-edges;
-        }
-        
-        .work-card:hover img { filter: brightness(1.1) contrast(1.2); transform: scale(1.02); }
-
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 30px; }
+        .work-card { background: var(--card-bg); border-radius: 12px; overflow: hidden; border: 1px solid #1a1a1c; position: relative; }
+        .work-card img { width: 100%; height: 260px; object-fit: cover; filter: brightness(0.9) contrast(1.1); image-rendering: -webkit-optimize-contrast; }
         .card-info { padding: 20px; border-top: 1px solid #1a1a1c; background: #0c0c0d; }
-        .card-info h3 { margin: 0; font-size: 1rem; letter-spacing: 2px; color: #eee; text-transform: uppercase; font-weight: 300; }
-
-        /* Interactions (Like/Comment) */
+        .card-info h3 { margin: 0; font-size: 1rem; letter-spacing: 2px; color: #eee; text-transform: uppercase; }
         .actions { display: flex; gap: 10px; margin-top: 15px; }
-        .btn { flex: 1; padding: 12px; border: 1px solid #222; border-radius: 6px; background: #16161a; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: bold; font-size: 0.8rem; }
-        
-        .btn-like { background: #1a1a1d; color: white; border-color: #333; }
-        .btn-like:hover { background: #ef4444; border-color: #ef4444; color: white; transform: scale(1.05); }
-        .btn-like i { margin-right: 5px; }
-
-        .btn-comment { background: var(--purple); color: white; border-color: var(--purple); }
-        .btn-comment:hover { background: #c084fc; border-color: #c084fc; box-shadow: 0 0 15px rgba(168, 85, 247, 0.4); }
-
-        footer { text-align: center; padding: 100px 20px 50px; opacity: 0.1; font-size: 0.8rem; letter-spacing: 8px; }
+        .btn { flex: 1; padding: 12px; border: 1px solid #222; border-radius: 6px; background: #16161a; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: bold; }
+        .btn-comment { background: var(--purple); border-color: var(--purple); }
     </style>
 </head>
 <body>
 
     <div id="auth-ui">
         <div class="auth-card">
-            <img src="https://i.postimg.cc/7LYQ9RMg/Hamido-Studio-(1).png" class="logo-original">
-            <h2 style="letter-spacing: 6px; margin: 0; font-size: 1.8rem;">HAMIDO STUDIO</h2>
-            <p style="color: #444; font-size: 0.8rem; letter-spacing: 1px;">PRIVATE ACCESS PORTFOLIO | AUTH REQUIRED</p>
-            <a id="login-btn" href="#" class="btn-discord"><i class="fab fa-discord"></i> ENTER GALLERY</a>
+            <img src="Hamido Studio (1).png" class="logo-original">
+            <h2 style="letter-spacing: 6px; margin: 0;">HAMIDO STUDIO</h2>
+            <button id="login-btn" class="btn-discord"><i class="fab fa-discord"></i> ENTER GALLERY</button>
         </div>
     </div>
 
     <div id="main-site">
         <div class="user-tag">
             <img id="u-avatar" src="">
-            <span id="u-name" style="font-weight: bold; font-size: 0.9rem;"></span>
+            <span id="u-name"></span>
         </div>
-
         <header>
-            <img src="https://i.postimg.cc/7LYQ9RMg/Hamido-Studio-(1).png" width="120" style="margin-bottom: 25px; border: 1px solid #222;">
-            <h1 style="letter-spacing: 20px; margin: 0; font-weight: 300; font-size: 3rem;">PRIVATE ASSETS</h1>
-            <p style="color: var(--purple); letter-spacing: 4px; font-weight: bold;">PREMIUM WORK FOR Roleplay Servers</p>
+            <img src="Hamido Studio (1).png" width="120" style="margin-bottom: 25px; border: 1px solid #222;">
+            <h1 style="letter-spacing: 20px; margin: 0; font-weight: 300;">PRIVATE ASSETS</h1>
         </header>
-
-        <div class="container">
-            <div class="grid" id="portfolio-grid">
-                </div>
-        </div>
-
-        <footer>BUILT BY HAMIDO STUDIO © 2026</footer>
+        <div class="container"><div class="grid" id="portfolio-grid"></div></div>
     </div>
 
     <script>
-        // --- 1. CONFIGURATION ---
-        const CLIENT_ID = "1492255954752770189"; 
-        const REDIRECT_URI = "http://127.0.0.1:5500/index.html"; // EXACT match m3a el portal
+        const CLIENT_ID = "1492255954752770189";
+        const REDIRECT_URI = "https://med290375-cmd.github.io/Hamido-Studio-/"; 
         const WEBHOOK = "https://discord.com/api/webhooks/1492252065861341375/egU6kgWvslmT1a8JTUkhRJMiMad5jituT7YBzNnLeEoQ1gg4to7C_0YYfE_YUKKxtHkj";
         const MY_TAG_ID = "716494793444032512"; 
 
-        // Variable global lel user elli yed5ol
-        let currentUser = null;
-
-        // Login Link construction
         document.getElementById('login-btn').onclick = function() {
             window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
         };
@@ -148,106 +69,46 @@
         if (token) {
             document.getElementById('auth-ui').style.display = 'none';
             document.getElementById('main-site').style.display = 'block';
-
-            // Get the visiting user's info
             fetch('https://discord.com/api/users/@me', { headers: { Authorization: `Bearer ${token}` } })
             .then(res => res.json())
             .then(user => {
-                currentUser = user; // Savi el user information
-                const avatar = user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png` : "https://discord.com/assets/f78426a064bc9dd24847519273bc9d3d.png";
+                const avatar = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
                 document.getElementById('u-name').innerText = user.username.toUpperCase();
                 document.getElementById('u-avatar').src = avatar;
-
-                // 1. Send Login Notification to YOUR discord
+                
                 fetch(WEBHOOK, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        content: `<@${MY_TAG_ID}> 🚨 **New Visitor Detected!**`,
-                        embeds: [{
-                            title: "Hamido Studio | Access Log",
-                            description: `**Username:** ${user.username}\n**ID:** \`${user.id}\``,
-                            color: 11031271, // Purple
-                            thumbnail: { url: avatar },
-                            timestamp: new Date()
-                        }]
+                        content: `<@${MY_TAG_ID}> 🚨 **${user.username}** d5al lel portfolio!`,
+                        embeds: [{ title: "Access Log", color: 11031271, thumbnail: { url: avatar } }]
                     })
                 });
-                renderGallery(); // Load the assets
+                renderGallery();
             });
         }
 
-        // --- 2. RENDER GALLERY (All works included) ---
         function renderGallery() {
             const works = [
-                { t: "HL-RP OFFICIAL V1", i: "https://i.postimg.cc/5trqv943/HL-RP-PIC-5.png" },
-                { t: "DIABLOS RED DESIGN", i: "https://i.postimg.cc/Q9mKVJmt/diablos-1.png" },
-                { t: "DIABLOS BLUE EDITION", i: "https://i.postimg.cc/8J4fsm48/diablos-2.png" },
-                { t: "TRAPSTAR ROLEPLAY V1", i: "https://i.postimg.cc/m1rz91pT/by-hamido.png" },
-                { t: "BLACK CITY BRANDING", i: "https://i.postimg.cc/6QPLR6Wj/HL-RP-PIC-4.png" },
-                { t: "DIABLOS UI FINAL", i: "https://i.postimg.cc/YGRLjz3n/diablos-6.png" },
-                { t: "HAMIDO STUDIO ASSET V2", i: "https://i.postimg.cc/8J4fsmHt/HA-STUDIO-2.png" },
-                { t: "PREMIUM WORK V3", i: "https://i.postimg.cc/MM5fXmDg/hamido-work-(2).png" },
-                { t: "HL-RP CINEMATIC", i: "https://i.postimg.cc/mzBFb5QH/HL-RP-PIC-1.png" }
+                { t: "HL-RP OFFICIAL V1", i: "HL RP PIC 5.png" },
+                { t: "DIABLOS RED DESIGN", i: "diablos-1.png" },
+                { t: "TRAPSTAR RP", i: "by-hamido.png" },
+                { t: "BLACK CITY", i: "HL RP PIC 4.png" }
             ];
             const grid = document.getElementById('portfolio-grid');
-            grid.innerHTML = ""; // Clear existing
             works.forEach(w => {
                 grid.innerHTML += `
                     <div class="work-card">
-                        <img src="${w.i}" alt="${w.t}" onclick="window.open('${w.i}', '_blank')">
+                        <img src="${w.i}" onclick="window.open('${w.i}', '_blank')">
                         <div class="card-info">
                             <h3>${w.t}</h3>
                             <div class="actions">
-                                <button class="btn btn-like" onclick="sendLike('${w.t}')"><i class="fas fa-heart"></i> Like</button>
-                                <button class="btn btn-comment" onclick="askComment('${w.t}')"><i class="fas fa-comment"></i> Comment</button>
+                                <button class="btn" onclick="alert('Liked!')">❤️ Like</button>
+                                <button class="btn btn-comment" onclick="alert('Review sent!')">💬 Review</button>
                             </div>
                         </div>
                     </div>`;
             });
-        }
-
-        // --- 3. INTERACTIONS (Webhook Notification) ---
-        function sendDiscordAction(msg) {
-            if (!currentUser) return;
-            fetch(WEBHOOK, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    username: `Hamido Bot (${currentUser.username})`,
-                    content: msg
-                })
-            });
-        }
-
-        function sendLike(designName) {
-            sendDiscordAction(`❤️ **${currentUser.username}** Liked design: **${designName}**`);
-            alert("Sent! Hamido appreciates your support.");
-        }
-
-        function askComment(designName) {
-            const comment = prompt(`Write your review for ${designName}:`);
-            if (comment) {
-                const avatar = `https://cdn.discordapp.com/avatars/${currentUser.id}/${currentUser.avatar}.png`;
-                fetch(WEBHOOK, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        embeds: [{
-                            title: "💬 New Review Received",
-                            color: 11031271, // Purple
-                            thumbnail: { url: avatar },
-                            fields: [
-                                { name: "User", value: `**${currentUser.username}**`, inline: true },
-                                { name: "Design", value: `**${designName}**`, inline: true },
-                                { name: "Comment", value: `>>> ${comment}` }
-                            ],
-                            timestamp: new Date()
-                        }]
-                    })
-                });
-                alert("Mersi! Rayek wsal l-Hamido Studio.");
-            }
         }
     </script>
 </body>
